@@ -2,6 +2,10 @@
   box-sizing: border-box;
 }
 
+img {
+  max-width: 100%;
+}
+
 html, body {
   height: 100%;
 }
@@ -12,13 +16,39 @@ body {
   padding: 0;
 }
 
-.click-bait {
-  height: 100%;
-  position: relative;
+.cat-wrapper {
   margin: 0 auto;
+  position: relative;
 }
 
-.click-number {
+.cat-box {
+  width: 300px;
+  position: relative;
+  margin: 0 auto;
+  cursor: pointer;
+  float: left;
+  margin: 44px;
+}
+
+.cat-box:active .cat-image {
+  transform: translate(0, 2px);
+}
+
+.cat-name {
+  margin: 0;
+  text-transform: lowercase;
+  font-style: italic;
+  text-align: center;
+}
+
+.cat-image {
+  margin: 0 auto;
+  display: block;
+  border-radius: 50%;
+  border: 30px solid wheat;
+}
+
+.click-counter {
   background: white;
   border: 8px solid wheat;
   text-align: center;
@@ -29,26 +59,8 @@ body {
   font-weight: bold;
   font-size: 25px;
   border-radius: 50%;
-  position: absolute;
-  left: 50%;
-  margin-left: 65px;
-  top: 50%;
-  margin-top: -120px;
   box-shadow: 5px 5px rgba(0,0,0, .25);
-}
-
-.clicker:active .cat-to-click {
-  transform: translate(0, 2px);
-}
-
-.cat-to-click {
-  width: 300px;
-  margin: 0 auto;
-  display: block;
-  border-radius: 50%;
-  border: 30px solid wheat;
   position: absolute;
-  top: 50%;
-  left: 50%;
-  margin: -150px 0 0 -150px;
+  right: 9px;
+  bottom: 230px;
 }

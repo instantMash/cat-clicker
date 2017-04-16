@@ -10,23 +10,90 @@
 <body>
 
 
-  <div class="click-bait">
-    <a id="target" class="clicker" href="#">
-      <img class="cat-to-click" src="images/cat-clicker-image.gif">
-    </a>
-    <div id="counter" class="click-number">1</div>
-  </div>
+<div id="wrapper" class="wrapper">
+</div>
+
 
   <script>
 
-  var catClicker = document.getElementById('target');
-  var counter = document.getElementById('counter');
+// Create Cat prototype.
+    function Cat(name, image){
+      this.name = name;
+      this.image = image;
+    }
 
-  target.addEventListener("click", function(){
-    var counterNumber = parseInt(counter.innerHTML);
-    counter.innerHTML = counterNumber + 1;
+// Instantiate cat objects.
+    var cat1 = new Cat("Theodore", "images/theodore.gif");
+    var cat2 = new Cat("Hooty", "images/hooty.gif");
 
-  });
+
+// Put the cat objects into an array.
+    var cats = [cat1, cat2];
+
+    catDraw = function(cat){
+      // Create container div.
+      var catBox = document.createElement("div");
+      catBox.classList.add("cat-box");
+      var node = document.createTextNode(""); // Needed to make an empty node for the div to show up. Not sure why.
+      catBox.appendChild(node);
+
+      // Create cat name header.
+      var name = document.createElement("h2");
+      var nameText = document.createTextNode(cat.name);
+      name.classList.add("cat-name");
+      name.appendChild(nameText);
+
+      // Create cat image.
+      var image = document.createElement("img");
+      image.setAttribute("src", cat.image);
+      image.classList.add("cat-image");
+
+      // Create counter.
+      var counter = document.createElement("div");
+      var counterText = document.createTextNode("1");
+      counter.appendChild(counterText);
+      counter.classList.add("click-counter");
+
+      // Append all the elements that we made.
+      var container = document.getElementById("wrapper");
+      container.appendChild(catBox);
+      catBox.appendChild(name);
+      catBox.appendChild(image);
+      catBox.appendChild(counter);
+
+    };
+
+    cats.forEach(catDraw);
+
+
+    function clicker(){
+      var target = document.getElementsByClassName('cat-box');
+      for(var i = 0; i < target.length; i++){
+        target[i].addEventListener("click", function(){
+          var counter = this.getElementsByClassName("click-counter");
+          for(var i = 0; i < counter.length; i++){
+          counterText = counter[i].innerHTML;
+          counterText = parseInt(counterText);
+          counter[i].innerHTML = counterText + 1;
+          }
+        })
+      }
+    }
+
+clicker();
+
+
+
+
+
+  // var catClicker = document.getElementById('target');
+  // var counter = document.getElementById('counter');
+  //
+  // target.addEventListener("click", function(){
+  //   var counterNumber = parseInt(counter.innerHTML);
+  //   counter.innerHTML = counterNumber + 1;
+  //
+  // });
 
 
 
