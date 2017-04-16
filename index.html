@@ -10,9 +10,15 @@
 <body>
 
 
-<div id="wrapper" class="wrapper">
+
+
+<div id="cat-box-wrapper" class="cat-box-wrapper">
+  <!-- Cat images and counters go here -->
 </div>
 
+<div id="cat-button-wrapper" class="cat-button-wrapper">
+  <!-- Cat buttons go here -->
+</div>
 
   <script>
 
@@ -20,21 +26,34 @@
     function Cat(name, image){
       this.name = name;
       this.image = image;
+      this.score = 0;
     }
 
 // Instantiate cat objects.
     var cat1 = new Cat("Theodore", "images/theodore.gif");
     var cat2 = new Cat("Hooty", "images/hooty.gif");
+    var cat3 = new Cat("Max", "images/max.gif");
+    var cat4 = new Cat("Rosie", "images/rosie.gif");
+    var cat5 = new Cat("Terrence", "images/terrence.gif");
 
 
 // Put the cat objects into an array.
-    var cats = [cat1, cat2];
+    var cats = [cat1, cat2, cat3, cat4, cat5];
 
     catDraw = function(cat){
+
+      // Create buttons.
+      var catButton = document.createElement("button");
+      var catButtonText = document.createTextNode(cat.name);
+      catButton.setAttribute("id", cat.name + "-button");
+      catButton.classList.add('cat-button');
+      catButton.appendChild(catButtonText);
+
       // Create container div.
       var catBox = document.createElement("div");
-      catBox.classList.add("cat-box");
       var node = document.createTextNode(""); // Needed to make an empty node for the div to show up. Not sure why.
+      catBox.setAttribute("id", cat.name);
+      catBox.classList.add("cat-box");
       catBox.appendChild(node);
 
       // Create cat name header.
@@ -44,60 +63,55 @@
       name.appendChild(nameText);
 
       // Create cat image.
-      var image = document.createElement("img");
-      image.setAttribute("src", cat.image);
-      image.classList.add("cat-image");
+      var catImage = document.createElement("img");
+      catImage.setAttribute("src", cat.image);
+      catImage.classList.add("cat-image");
 
       // Create counter.
       var counter = document.createElement("div");
-      var counterText = document.createTextNode("1");
+      var counterText = document.createTextNode(cat.score);
       counter.appendChild(counterText);
+      counter.setAttribute("id", cat.name + "-score");
       counter.classList.add("click-counter");
 
       // Append all the elements that we made.
-      var container = document.getElementById("wrapper");
-      container.appendChild(catBox);
+      var buttonWrapper = document.getElementById("cat-button-wrapper");
+      var catWrapper = document.getElementById("cat-box-wrapper");
+      buttonWrapper.appendChild(catButton);
+      catWrapper.appendChild(catBox);
       catBox.appendChild(name);
-      catBox.appendChild(image);
+      catBox.appendChild(catImage);
       catBox.appendChild(counter);
 
+      // Show cats when their buttons are clicked.
+      catButton.addEventListener("click", function(){
+
+        // Highlight active cat name
+        var removeHighlight = document.getElementsByClassName('cat-button');
+        for (i = 0; i < removeHighlight.length; i++){
+          removeHighlight[i].classList.remove("active-cat-button");
+        }
+
+
+        catButton.classList.toggle("active-cat-button");
+
+        var removeClass = document.getElementsByClassName("reveal-cat-box");
+        for(i = 0; i < removeClass.length; i++){
+          removeClass[i].classList.remove("reveal-cat-box");
+        }
+        catBox.classList.toggle("reveal-cat-box");
+
+
+      })
+
+      // Increase score when cat image is clicked
+      catImage.addEventListener("click", function(){
+        cat.score = cat.score + 1;
+        counter.innerHTML = cat.score;
+      })
     };
 
     cats.forEach(catDraw);
-
-
-    function clicker(){
-      var target = document.getElementsByClassName('cat-box');
-      for(var i = 0; i < target.length; i++){
-        target[i].addEventListener("click", function(){
-          var counter = this.getElementsByClassName("click-counter");
-          for(var i = 0; i < counter.length; i++){
-          counterText = counter[i].innerHTML;
-          counterText = parseInt(counterText);
-          counter[i].innerHTML = counterText + 1;
-          }
-        })
-      }
-    }
-
-clicker();
-
-
-
-
-
-  // var catClicker = document.getElementById('target');
-  // var counter = document.getElementById('counter');
-  //
-  // target.addEventListener("click", function(){
-  //   var counterNumber = parseInt(counter.innerHTML);
-  //   counter.innerHTML = counterNumber + 1;
-  //
-  // });
-
-
-
-
 
   </script>
 
